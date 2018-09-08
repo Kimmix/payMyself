@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
-  const Cart_Item = sequelize.define(
-    "Cart_Item",
+  const Order = sequelize.define(
+    "Order",
     {
-      cart_item_id: {
+      order_id: {
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
@@ -18,25 +18,25 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: true,
         type: DataTypes.INTEGER
       },
-      cart_item_qty: {
+      order_qty: {
         type: DataTypes.INTEGER,
         defaultValue: 1
       },
-      cart_item_sum: {
+      order_total: {
         type: DataTypes.INTEGER
       }
     },
     {}
   );
-  Cart_Item.associate = function(models) {
-    Cart_Item.belongsTo(models.Cart, {
+  Order.associate = function(models) {
+    Order.belongsTo(models.Cart, {
       foreignKey: "cart_fk",
       onDelete: "CASCADE"
     });
-    Cart_Item.belongsTo(models.Product, {
+    Order.belongsTo(models.Product, {
       foreignKey: "product_fk",
       onDelete: "CASCADE"
     });
   };
-  return Cart_Item;
+  return Order;
 };

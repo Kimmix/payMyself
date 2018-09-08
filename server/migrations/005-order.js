@@ -1,7 +1,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Cart_Items", {
-      cart_item_id: {
+    queryInterface.createTable("Orders", {
+      order_id: {
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
@@ -29,11 +29,11 @@ module.exports = {
           as: "product_fk"
         }
       },
-      cart_item_qty: {
+      order_qty: {
         type: Sequelize.INTEGER,
         defaultValue: 1
       },
-      cart_item_sum: {
+      order_total: {
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -45,6 +45,5 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-  down: (queryInterface /* , Sequelize */) =>
-    queryInterface.dropTable("Cart_Items")
+  down: (queryInterface /* , Sequelize */) => queryInterface.dropTable("Orders")
 };

@@ -7,6 +7,7 @@ router.use(authenticate);
 //Product management
 router.post("/", (req, res) => {
   Product.create({
+    product_id: req.body.id,
     product_name: req.body.name,
     product_description: req.body.description,
     product_picture_url: req.body.url,
