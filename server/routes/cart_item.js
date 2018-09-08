@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
     include: [
       {
         model: Cart_Item,
-        attributes: ["cart_item_id", "cart_item_qty"],
+        attributes: ["cart_item_id", "cart_item_qty", "cart_item_sum"],
         include: [
           {
             model: Product,
@@ -29,52 +29,12 @@ router.get("/", (req, res) => {
         res.status(200).json({
           item_in_cart: data.rows,
           count: data.count,
-          sum: sum
+          total: sum
         });
       })
     )
     .catch(error => res.status(400).send(error));
 });
-
-// router.post("/", (req, res) => {
-//   Product.findById(req.body.product).then(product => {
-//     Cart.findOrCreate({
-//       where: { cart_id: req.currentUser.user_id }
-//     })
-//       .then(cart => {
-//         Cart_Item.findOrCreate({
-//           where: {
-//             product_fk: req.body.product,
-//             cart_fk: req.currentUser.user_id
-//           }
-//         })
-//           .spread((cartResult, created) => {
-//             let sum = cartResult.cart_item_qty * product.product_price;
-//             console.log("Hellooooooooooooooo");
-//             console.log(sum);
-//             if (created) {
-//               Cart_Item.update({
-//                 cart_item_sum: sum
-//               })
-//                 .then(() => res.status(201).json({ msg: "Item added" }))
-//                 .catch(error => res.status(400).send(error));
-//             } else {
-//               cartResult.increment("cart_item_qty");
-//               Cart_Item.update(
-//                 {
-//                   cart_item_sum: sum
-//                 },
-//                 { where: { cartResult } }
-//               )
-//                 .then(() => res.status(201).json({ msg: "Item incremented" }))
-//                 .catch(error => res.status(400).send(error));
-//             }
-//           })
-//           .catch(error => res.status(400).send(error));
-//       })
-//       .catch(error => res.status(400).send(error));
-//   });
-// });
 
 router.post("/", (req, res) => {
   Product.findById(req.body.product)
@@ -109,7 +69,7 @@ router.post("/", (req, res) => {
               Cart_Item.create({
                 product_fk: req.body.product,
                 cart_fk: req.currentUser.user_id,
-                cart_item_sum: 1 * product.product_price
+                cart_item_sum: product.product_price
               })
                 .then(() => res.status(201).json({ msg: "Item added" }))
                 .catch(error => res.status(400).send(error));
