@@ -24,5 +24,4 @@ app.get("/", (req, res) =>
 
 const port = parseInt(process.env.PORT, 10) || 7000;
 app.listen(port, () => console.log(`Running on localhost:${port}`));
-
 module.exports = app;
