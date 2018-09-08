@@ -8,19 +8,10 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         type: DataTypes.INTEGER
       },
-      cart_fk: {
+      user_fk: {
         allowNull: false,
         foreignKey: true,
         type: DataTypes.UUID
-      },
-      product_fk: {
-        allowNull: false,
-        foreignKey: true,
-        type: DataTypes.INTEGER
-      },
-      order_qty: {
-        type: DataTypes.INTEGER,
-        defaultValue: 1
       },
       order_total: {
         type: DataTypes.INTEGER
@@ -29,13 +20,12 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Order.associate = function(models) {
-    Order.belongsTo(models.Cart, {
-      foreignKey: "cart_fk",
+    Order.belongsTo(models.User, {
+      foreignKey: "cart_id",
       onDelete: "CASCADE"
     });
-    Order.belongsTo(models.Product, {
-      foreignKey: "product_fk",
-      onDelete: "CASCADE"
+    Order.hasMany(models.Cart_Item, {
+      foreignKey: "cart_fk"
     });
   };
   return Order;

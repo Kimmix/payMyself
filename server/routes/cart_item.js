@@ -1,6 +1,8 @@
 const express = require("express");
 const Cart = require("../models").Cart;
 const Cart_Item = require("../models").Cart_Item;
+const Order = require("../models").Order;
+const Order_Item = require("../models").Order_Item;
 const Product = require("../models").Product;
 const router = express.Router();
 import authenticate from "../middlewares/authenticate";
@@ -94,6 +96,30 @@ router.delete("/:item", (req, res) => {
         } else {
           item.destroy().then(() => res.status(204).send());
         }
+      });
+    })
+    .catch(error => res.status(400).send(error));
+});
+
+router.post("/complete", (req, res) => {
+  Cart.findOne({
+    where: { cart_id: req.currentUser.user_id }
+  })
+    .then(cart => {
+      Cart_Item.findAndCountAll({
+        where: { cart_item_id: req.params.item }
+      }).then(item => {
+        Order.create({
+          user_fk: req.currentUser.user_id
+          // order_total: total
+        }).then(order => {
+          Order_Item.create({
+            order_fk: order.order_id,
+            product_fk: item.product_fk,
+            order_item_qty: item.cart_item_qty,
+            order_item_total: item.cart_item_sum
+          });
+        });
       });
     })
     .catch(error => res.status(400).send(error));

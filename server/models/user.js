@@ -38,6 +38,9 @@ module.exports = (sequelize, DataTypes) => {
     User.hasOne(models.Cart, {
       foreignKey: "cart_id"
     });
+    User.hasMany(models.Order, {
+      foreignKey: "user_fk"
+    });
   };
 
   User.beforeCreate((user, options) => {

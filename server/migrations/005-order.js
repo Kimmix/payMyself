@@ -2,36 +2,21 @@ module.exports = {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable("Orders", {
       order_id: {
-        allowNull: false,
-        primaryKey: true,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
-        type: Sequelize.INTEGER
+        primaryKey: true,
+        allowNull: false
       },
-      cart_fk: {
+      user_fk: {
         type: Sequelize.UUID,
         foreignKey: true,
         allowNull: false,
         onDelete: "CASCADE",
         references: {
-          model: "Carts",
-          key: "cart_id",
-          as: "cart_fk"
+          model: "Users",
+          key: "user_id",
+          as: "user_fk"
         }
-      },
-      product_fk: {
-        type: Sequelize.INTEGER,
-        foreignKey: true,
-        allowNull: false,
-        onDelete: "CASCADE",
-        references: {
-          model: "Products",
-          key: "product_id",
-          as: "product_fk"
-        }
-      },
-      order_qty: {
-        type: Sequelize.INTEGER,
-        defaultValue: 1
       },
       order_total: {
         type: Sequelize.INTEGER
