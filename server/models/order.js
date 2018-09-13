@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
       order_id: {
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
         type: DataTypes.INTEGER
       },
       user_fk: {
@@ -21,11 +20,11 @@ module.exports = (sequelize, DataTypes) => {
   );
   Order.associate = function(models) {
     Order.belongsTo(models.User, {
-      foreignKey: "cart_id",
+      foreignKey: "user_fk",
       onDelete: "CASCADE"
     });
-    Order.hasMany(models.Cart_Item, {
-      foreignKey: "cart_fk"
+    Order.hasMany(models.Order_Item, {
+      foreignKey: "order_fk"
     });
   };
   return Order;

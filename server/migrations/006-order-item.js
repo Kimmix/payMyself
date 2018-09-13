@@ -4,7 +4,6 @@ module.exports = {
       order_item_id: {
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
         type: Sequelize.INTEGER
       },
       order_fk: {

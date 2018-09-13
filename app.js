@@ -14,7 +14,7 @@ app.use("/api/v1/admin", require("./server/routes/admin"));
 app.use("/api/v1/auth", require("./server/routes/auth"));
 app.use("/api/v1/user", require("./server/routes/user"));
 app.use("/api/v1/product", require("./server/routes/product"));
-app.use("/api/v1/cart", require("./server/routes/cart_item"));
+app.use("/api/v1/cart", require("./server/routes/cart"));
 app.get("/", (req, res) =>
   res.status(200).send({
     message:

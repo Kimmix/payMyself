@@ -8,6 +8,14 @@ const router = express.Router();
 import authenticate from "../middlewares/authenticate";
 router.use(authenticate);
 
+// totalAmount (cartProducts => {
+//   var total = 0;
+//   cartProducts.forEach(product => {
+//     total += product.price * product.quantity;
+//   });
+//   return total;
+// });
+
 router.get("/", (req, res) => {
   Cart.findAndCountAll({
     where: { cart_id: req.currentUser.user_id },
@@ -101,28 +109,66 @@ router.delete("/:item", (req, res) => {
     .catch(error => res.status(400).send(error));
 });
 
-router.post("/complete", (req, res) => {
-  Cart.findOne({
-    where: { cart_id: req.currentUser.user_id }
-  })
-    .then(cart => {
-      Cart_Item.findAndCountAll({
-        where: { cart_item_id: req.params.item }
-      }).then(item => {
-        Order.create({
-          user_fk: req.currentUser.user_id
-          // order_total: total
-        }).then(order => {
-          Order_Item.create({
-            order_fk: order.order_id,
-            product_fk: item.product_fk,
-            order_item_qty: item.cart_item_qty,
-            order_item_total: item.cart_item_sum
-          });
-        });
-      });
-    })
-    .catch(error => res.status(400).send(error));
+router.get("/complete", (req, res) => {
+  const curUser = req.currentUser.user_id;
+  getNewOrderId(id => {
+    let orderID = id + 1;
+    getCartContents(res, curUser, orderID);
+  });
 });
+
+function getNewOrderId(cb) {
+  Order.findAll({
+    order: [["order_id", "DESC"]],
+    limit: 1
+  }).then(orderNumber => {
+    cb(orderNumber[0].dataValues.order_id);
+  });
+}
+
+function getCartContents(res, curUser, orderID) {
+  console.log(orderID);
+  Cart.findById(curUser).then(cart => {
+    if (!cart) {
+      res.status(200).send({ msg: "Cart Not Found" });
+    } else {
+      Cart_Item.findAll({
+        where: {
+          cart_fk: curUser
+        },
+        include: [Product]
+      })
+        .then(item => {
+          Order.create({
+            order_id: orderID,
+            user_fk: curUser
+          });
+          if (item.length > 0) {
+            for (var i = 0; i < item.length; i++) {
+              Order_Item.create({
+                order_item_id: orderID * 100 + (i + 1),
+                order_fk: orderID,
+                product_fk: item[i].product_fk,
+                order_item_qty: item[i].cart_item_qty,
+                order_item_total: item[i].cart_item_sum
+              });
+            }
+          }
+          clearCart(res, curUser);
+        })
+        .catch(error => res.status(400).send(error));
+    }
+  });
+}
+
+function clearCart(res, curUser) {
+  Cart.destroy({
+    where: {
+      cart_id: curUser
+    }
+  }).then(() => {
+    res.status(200).send({ msg: "Thanks for shopping with us" });
+  });
+}
 
 module.exports = router;

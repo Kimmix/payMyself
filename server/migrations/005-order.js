@@ -3,7 +3,6 @@ module.exports = {
     queryInterface.createTable("Orders", {
       order_id: {
         type: Sequelize.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
         allowNull: false
       },
