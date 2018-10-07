@@ -10,4 +10,5 @@ To run:
 sequelize db:migrate
 npm install
 npm start
+ABCDEFG HIJKL MNOP QRS DUV W X Y Z
 ```
