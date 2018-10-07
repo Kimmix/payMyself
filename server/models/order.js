@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       order_id: {
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
         type: DataTypes.INTEGER
       },
       user_fk: {
@@ -13,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID
       },
       order_total: {
-        type: DataTypes.INTEGER
+        type: DataTypes.FLOAT
       }
     },
     {}

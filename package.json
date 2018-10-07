@@ -15,10 +15,12 @@
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
     "morgan": "^1.9.0",
-    "mysql2": "^1.5.3",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.1",
     "nodemon": "^1.17.5",
     "path": "^0.12.7",
-    "sequelize": "^4.38.0"
+    "sequelize": "^4.38.0",
+    "sequelize-cli": "^4.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

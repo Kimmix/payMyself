@@ -32,10 +32,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      order_item_total: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

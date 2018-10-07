@@ -28,6 +28,12 @@ module.exports = {
       user_tel: {
         type: Sequelize.STRING
       },
+      user_pin: {
+        type: Sequelize.INTEGER(4)
+      },
+      user_money: {
+        type: Sequelize.FLOAT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

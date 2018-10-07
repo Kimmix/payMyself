@@ -21,9 +21,6 @@ module.exports = (sequelize, DataTypes) => {
       cart_item_qty: {
         type: DataTypes.INTEGER,
         defaultValue: 1
-      },
-      cart_item_sum: {
-        type: DataTypes.INTEGER
       }
     },
     {}

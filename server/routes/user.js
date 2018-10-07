@@ -7,7 +7,7 @@ router.post("/signup", (req, res) => {
   User.findOne({ where: { user_email: email } })
     .then(user => {
       if (user) {
-        res.status(400).json({ errors: "Your email has already been taken" });
+        res.status(400).json({ errors: "Your email has already used" });
       } else {
         User.create({ user_email: email, user_password: password })
           .then(userRecord => {

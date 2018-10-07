@@ -13,8 +13,13 @@ export default (req, res, next) => {
         res.status(401).json({ errors: { global: "Invalid token" } });
       } else {
         User.findOne({ where: { user_id: decoded.user_id } }).then(user => {
-          req.currentUser = user;
-          next();
+          if (!user) {
+            res.status(401).json({ errors: { global: "Invalid user" } });
+          }
+          else {
+            req.currentUser = user;
+            next();
+          }
         });
       }
     });

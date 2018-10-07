@@ -33,9 +33,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 1
       },
-      cart_item_sum: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

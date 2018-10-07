@@ -20,10 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       order_item_qty: {
         type: DataTypes.INTEGER,
         allowNull: false
-      },
-      order_item_total: {
-        type: DataTypes.INTEGER,
-        allowNull: false
       }
     },
     {}
