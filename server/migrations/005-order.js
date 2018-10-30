@@ -4,7 +4,8 @@ module.exports = {
       order_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        autoIncrement: true,
       },
       user_fk: {
         type: Sequelize.UUID,

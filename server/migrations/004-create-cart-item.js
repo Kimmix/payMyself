@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Cart_Items", {
+    queryInterface.createTable('Cart_Items', {
       cart_item_id: {
         allowNull: false,
         primaryKey: true,
@@ -11,22 +11,22 @@ module.exports = {
         type: Sequelize.UUID,
         foreignKey: true,
         allowNull: false,
-        onDelete: "CASCADE",
+        onDelete: 'CASCADE',
         references: {
-          model: "Carts",
-          key: "cart_id",
-          as: "cart_fk"
+          model: 'Carts',
+          key: 'cart_id',
+          as: 'cart_fk'
         }
       },
       product_fk: {
         type: Sequelize.INTEGER,
         foreignKey: true,
         allowNull: false,
-        onDelete: "CASCADE",
+        onDelete: 'CASCADE',
         references: {
-          model: "Products",
-          key: "product_id",
-          as: "product_fk"
+          model: 'Products',
+          key: 'product_id',
+          as: 'product_fk'
         }
       },
       cart_item_qty: {
@@ -43,5 +43,5 @@ module.exports = {
       }
     }),
   down: (queryInterface /* , Sequelize */) =>
-    queryInterface.dropTable("Cart_Items")
+    queryInterface.dropTable('Cart_Items')
 };

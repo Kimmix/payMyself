@@ -9,15 +9,10 @@ router.post("/", (req, res) => {
   User.findOne({ where: { user_email: email } }).then(user => {
     if (user) {
       bcrypt.compare(password, user.user_password, (err, result) => {
-        if (result) {
-          res.json({ user: user.toAuthJSON() });
-        } else {
-          res.status(401).json({ errors: "Invalid password" });
-        }
+        if (result) res.json({ user: user.toAuthJSON() });
+        else res.status(401).json({ errors: "Invalid password" });
       });
-    } else {
-      res.status(404).json({ errors: "User not found" });
-    }
+    } else res.status(404).json({ errors: "User not found" });
   });
 });
 
