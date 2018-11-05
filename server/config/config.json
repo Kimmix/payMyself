@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "",
-    "database": "paymyself",
-    "host": "127.0.0.1",
+    "username": "qsnr6jdvcpr7psve",
+    "password": "ah9nexqp86m6oqua",
+    "database": "f4wgemkwc4snvmjd",
+    "host": "tj5iv8piornf713y.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "port": 3306,
     "dialect": "mysql"
   }

@@ -31,7 +31,7 @@ app.get('/', (req, res) =>
   })
 );
 
-const port = parseInt(process.env.PORT, 10) || 7000;
+const port = process.env.PORT || 5000;
 app.listen(port, () =>
   console.log('\x1b[34m', `🌏 Running on http://localhost:${port}`)
 );
