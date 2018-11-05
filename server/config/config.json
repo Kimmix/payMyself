@@ -8,6 +8,12 @@
     "dialect": "mysql"
   },
   "production": {
-    "use_env_variable": "tj5iv8piornf713y.cbetxkdyhwsb.us-east-1.rds.amazonaws.com"
+    "use_env_variable": "tj5iv8piornf713y.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "username": "qsnr6jdvcpr7psve",
+    "password": "ah9nexqp86m6oqua",
+    "database": "f4wgemkwc4snvmjd",
+    "host": "tj5iv8piornf713y.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "port": 3306,
+    "dialect": "mysql"
   }
 }
