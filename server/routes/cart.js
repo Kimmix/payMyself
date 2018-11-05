@@ -5,7 +5,7 @@ const Order = require('../models').Order;
 const Order_Item = require('../models').Order_Item;
 const Product = require('../models').Product;
 const router = express.Router();
-import authenticate from '../middlewares/authenticate';
+const authenticate = require('../middlewares/authenticate');
 router.use(authenticate);
 
 router.get('/', (req, res) => {

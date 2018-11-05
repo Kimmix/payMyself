@@ -1,8 +1,9 @@
 const express = require('express');
 const Product = require('../models').Product;
 const router = express.Router();
-import authenticate from '../middlewares/authenticateAdmin';
-router.use(authenticate);
+const authAdmin = require('../middlewares/authenticateAdmin');
+// import authAdmin from '../middlewares/authenticateAdmin';
+router.use(authAdmin);
 
 //Product management
 router.post('/product', (req, res) => {

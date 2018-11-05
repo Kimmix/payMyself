@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "babel-node app.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
@@ -22,11 +22,5 @@
     "path": "^0.12.7",
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.1.1"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^7.2.3",
-    "babel-preset-env": "^1.7.0",
-    "nodemon": "^1.11.0"
   }
 }
