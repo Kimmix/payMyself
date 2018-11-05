@@ -6,5 +6,8 @@
     "host": "tj5iv8piornf713y.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "port": 3306,
     "dialect": "mysql"
+  },
+  "production": {
+    "use_env_variable": "tj5iv8piornf713y.cbetxkdyhwsb.us-east-1.rds.amazonaws.com"
   }
 }
