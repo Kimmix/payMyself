@@ -1,7 +1,7 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define("User", {
+  const User = sequelize.define('User', {
     user_id: {
       allowNull: false,
       primaryKey: true,
@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: {
           args: true,
-          msg: "Email is not valid"
+          msg: 'Email is not valid'
         }
       },
       unique: {
-        msg: "This email is already taken."
+        msg: 'This email is already taken.'
       }
     },
     user_password: {
@@ -30,24 +30,24 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     },
     user_name: { type: DataTypes.STRING },
-    user_sex: { type: DataTypes.ENUM, values: ["male", "female"] },
+    user_sex: { type: DataTypes.ENUM, values: ['male', 'female'] },
     user_tel: { type: DataTypes.STRING },
-    user_pin: { 
-      type: DataTypes.INTEGER(4) ,
+    user_pin: {
+      type: DataTypes.INTEGER(4),
       validate: {
         isInt: true,
         min: 4
       }
     },
-    user_money: { type: DataTypes.FLOAT }
+    user_money: { type: DataTypes.FLOAT, defaultValue: 10000 }
   });
 
   User.associate = models => {
     User.hasOne(models.Cart, {
-      foreignKey: "cart_id"
+      foreignKey: 'cart_id'
     });
     User.hasMany(models.Order, {
-      foreignKey: "user_fk"
+      foreignKey: 'user_fk'
     });
   };
 

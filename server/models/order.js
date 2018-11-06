@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define(
-    "Order",
+    'Order',
     {
       order_id: {
         allowNull: false,
@@ -21,11 +21,11 @@ module.exports = (sequelize, DataTypes) => {
   );
   Order.associate = function(models) {
     Order.belongsTo(models.User, {
-      foreignKey: "user_fk",
-      onDelete: "CASCADE"
+      foreignKey: 'user_fk',
+      onDelete: 'CASCADE'
     });
     Order.hasMany(models.Order_Item, {
-      foreignKey: "order_fk"
+      foreignKey: 'order_fk'
     });
   };
   return Order;

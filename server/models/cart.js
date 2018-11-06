@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Cart = sequelize.define(
-    "Cart",
+    'Cart',
     {
       cart_id: {
         primaryKey: true,
@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
   );
   Cart.associate = function(models) {
     Cart.belongsTo(models.User, {
-      foreignKey: "cart_id",
-      onDelete: "CASCADE"
+      foreignKey: 'cart_id',
+      onDelete: 'CASCADE'
     });
     Cart.hasMany(models.Cart_Item, {
-      foreignKey: "cart_fk"
+      foreignKey: 'cart_fk'
     });
   };
   return Cart;
