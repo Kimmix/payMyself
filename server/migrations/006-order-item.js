@@ -18,7 +18,7 @@ module.exports = {
         }
       },
       product_fk: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         foreignKey: true,
         allowNull: false,
         onDelete: 'CASCADE',
