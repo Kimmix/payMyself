@@ -9,7 +9,7 @@ router.use(auth);
 router.get('/', (req, res) => {
   Cart.findById(req.currentUser.user_id).then(cart => {
     if (!cart) {
-      res.status(404).send({ msg: 'Cart empty' });
+      res.status(500).send({ msg: 'Cart empty' });
       return;
     }
     Cart_Item.findAll({
@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
           total: total
         });
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => res.status(500).send(error));
   });
 });
 
@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
   try {
     Product.findById(req.body.product).then(product => {
       if (!product) {
-        res.status(404).send({ msg: 'Item Not Found' });
+        res.status(500).send({ msg: 'Item Not Found' });
       } else {
         Cart.findOrCreate({
           where: { cart_id: req.currentUser.user_id }
@@ -67,7 +67,7 @@ router.post('/', (req, res) => {
       }
     });
   } catch (err) {
-    res.status(400).json({ errors: err });
+    res.status(500).json({ errors: err });
   }
 });
 
@@ -79,14 +79,14 @@ router.delete('/:item', (req, res) => {
       Cart_Item.findOne({
         where: { cart_item_id: req.params.item }
       }).then(item => {
-        if (!item) res.status(404).send({ msg: 'Item Not Found' });
+        if (!item) res.status(500).send({ msg: 'Item Not Found' });
         else
           item
             .destroy()
             .then(() => res.status(204).send({ msg: 'Item deleted' }));
       });
     })
-    .catch(error => res.status(400).send(error));
+    .catch(error => res.status(500).send(error));
 });
 
 module.exports = router;

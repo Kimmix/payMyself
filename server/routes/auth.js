@@ -10,9 +10,9 @@ router.post("/", (req, res) => {
     if (user) {
       bcrypt.compare(password, user.user_password, (err, result) => {
         if (result) res.json({ user: user.toAuthJSON() });
-        else res.status(401).json({ errors: "Invalid password" });
+        else res.status(500).sent({ error: "Invalid password" });
       });
-    } else res.status(404).json({ errors: "User not found" });
+    } else res.status(500).sent({ error: "User not found" });
   });
 });
 

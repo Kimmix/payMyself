@@ -15,19 +15,19 @@ router.post('/product', (req, res) => {
     product_price: req.body.price
   })
     .then(product => res.status(201).json({ msg: 'Product created' }))
-    .catch(error => res.status(400).send(error));
+    .catch(error => res.status(500).send(error));
 });
 
 router.delete('/product/:id', (req, res) => {
   Product.findById(req.params.id)
     .then(product => {
-      if (!product) return res.status(400).send({ msg: 'Product Not Found' });
+      if (!product) return res.status(500).send({ msg: 'Product Not Found' });
       return product
         .destroy()
         .then(() => res.status(204).send())
-        .catch(error => res.status(400).send(error));
+        .catch(error => res.status(500).send(error));
     })
-    .catch(error => res.status(400).send(error));
+    .catch(error => res.status(500).send(error));
 });
 
 module.exports = router;
