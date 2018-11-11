@@ -2,9 +2,8 @@ const express = require('express');
 const Product = require('../models').Product;
 const router = express.Router();
 const authAdmin = require('../middlewares/authenticateAdmin');
-// import authAdmin from '../middlewares/authenticateAdmin';
-router.use(authAdmin);
 
+router.use(authAdmin);
 //Product management
 router.post('/product', (req, res) => {
   Product.create({
@@ -21,11 +20,11 @@ router.post('/product', (req, res) => {
 router.delete('/product/:id', (req, res) => {
   Product.findById(req.params.id)
     .then(product => {
-      if (!product) return res.status(500).send({ msg: 'Product Not Found' });
+      if (!product) return res.status(502).send({ msg: 'Product Not Found' });
       return product
         .destroy()
         .then(() => res.status(204).send())
-        .catch(error => res.status(500).send(error));
+        .catch(error => res.status(501).send(error));
     })
     .catch(error => res.status(500).send(error));
 });

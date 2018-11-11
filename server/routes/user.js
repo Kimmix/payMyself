@@ -7,7 +7,7 @@ router.post('/signup', (req, res) => {
   const { email, password, name, sex, tel } = req.body;
   try {
     User.findOne({ where: { user_email: email } }).then(user => {
-      if (user) res.status(500).send({ error: 'Your email has already used' });
+      if (user) res.status(501).send({ error: 'Your email has already used' });
       else {
         User.create({
           user_email: email,

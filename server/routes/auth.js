@@ -10,7 +10,7 @@ router.post('/', (req, res) => {
     if (user) {
       bcrypt.compare(password, user.user_password, (err, result) => {
         if (result) res.json({ user: user.toAuthJSON() });
-        else res.status(500).send('Invalid password');
+        else res.status(501).send('Invalid password');
       });
     } else res.status(500).send('User not found');
   });

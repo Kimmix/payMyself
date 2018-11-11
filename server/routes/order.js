@@ -13,7 +13,7 @@ router.get('/checkout', (req, res) => {
   try {
     User.findById(req.currentUser.user_id).then(user => {
       Cart.findById(user.user_id).then(cart => {
-        if (!cart) res.status(500).send({ error: 'Cart Not Found' });
+        if (!cart) res.status(501).send({ error: 'Cart Not Found' });
         else {
           Cart_Item.findAll({
             where: { cart_fk: user.user_id },
@@ -26,7 +26,7 @@ router.get('/checkout', (req, res) => {
             }
             //Payment
             if (total > user.user_money)
-              res.status(500).send({ error: 'Please refill money' });
+              res.status(502).send({ error: 'Please refill money' });
             else {
               Order.create({
                 user_fk: user.user_id,

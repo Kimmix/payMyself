@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 router.get('/:product_id', (req, res) => {
   Product.find({
     where: {
-      product_id: req.params.product_id
+      product_id: req.params.product
     }
   })
     .then(product => {

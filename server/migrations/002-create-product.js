@@ -1,10 +1,10 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Products", {
+    queryInterface.createTable('Products', {
       product_id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       product_name: {
         type: Sequelize.STRING,
@@ -29,5 +29,5 @@ module.exports = {
       }
     }),
   down: (queryInterface /* , Sequelize */) =>
-    queryInterface.dropTable("Products")
+    queryInterface.dropTable('Products')
 };

@@ -9,7 +9,7 @@ router.use(auth);
 router.get('/', (req, res) => {
   Cart.findById(req.currentUser.user_id).then(cart => {
     if (!cart) {
-      res.status(500).send({ msg: 'Cart empty' });
+      res.status(501).send({ msg: 'Cart empty' });
       return;
     }
     Cart_Item.findAll({
@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
   try {
     Product.findById(req.body.product).then(product => {
       if (!product) {
-        res.status(500).send({ msg: 'Item Not Found' });
+        res.status(501).send({ msg: 'Item Not Found' });
       } else {
         Cart.findOrCreate({
           where: { cart_id: req.currentUser.user_id }
@@ -79,7 +79,7 @@ router.delete('/:item', (req, res) => {
       Cart_Item.findOne({
         where: { cart_item_id: req.params.item }
       }).then(item => {
-        if (!item) res.status(500).send({ msg: 'Item Not Found' });
+        if (!item) res.status(501).send({ msg: 'Item Not Found' });
         else
           item
             .destroy()
