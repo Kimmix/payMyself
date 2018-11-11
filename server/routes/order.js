@@ -62,7 +62,7 @@ router.get('/checkout', (req, res) => {
       });
     });
   } catch (err) {
-    res.status(500).sent({ errors: err });
+    res.status(500).send({ errors: err });
   }
 });
 
