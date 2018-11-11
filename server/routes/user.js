@@ -7,7 +7,7 @@ router.post('/signup', (req, res) => {
   const { email, password, name, sex, tel } = req.body;
   try {
     User.findOne({ where: { user_email: email } }).then(user => {
-      if (user) res.status(501).send({ error: 'Your email has already used' });
+      if (user) res.status(501).send('Your email has already used');
       else {
         User.create({
           user_email: email,
@@ -16,12 +16,12 @@ router.post('/signup', (req, res) => {
           user_sex: sex,
           user_tel: tel
         }).then(() => {
-          res.status(201).json({ msg: 'User created.' });
+          res.status(201).json('User created.');
         });
       }
     });
   } catch (err) {
-    res.status(500).send({ error: err });
+    res.status(500).send(err);
   }
 });
 
@@ -38,7 +38,7 @@ router.get('/', auth, (req, res) => {
     ]
   })
     .then(user => {
-      res.status(200).json({ data: user });
+      res.status(200).json(user);
     })
     .catch(error => res.status(500).send(error));
 });
@@ -50,7 +50,7 @@ router.post('/money', auth, (req, res) => {
     where: { user_id: req.currentUser.user_id }
   })
     .then(() => {
-      res.status(200).json({ msg: 'Money refilled' });
+      res.status(200).json('Money refilled');
     })
     .catch(error => res.status(500).send(error));
 });
@@ -66,7 +66,7 @@ router.post('pin', auth, (req, res) => {
     }
   )
     .then(() => {
-      res.status(200).json({ msg: 'Pin seted' });
+      res.status(200).json('Pin seted');
     })
     .catch(error => res.status(500).send(error));
 });

@@ -9,7 +9,7 @@ router.use(auth);
 router.get('/', (req, res) => {
   Cart.findById(req.currentUser.user_id).then(cart => {
     if (!cart) {
-      res.status(501).send({ msg: 'Cart empty' });
+      res.status(501).send('Cart empty');
       return;
     }
     Cart_Item.findAll({
@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
   try {
     Product.findById(req.body.product).then(product => {
       if (!product) {
-        res.status(501).send({ msg: 'Item Not Found' });
+        res.status(501).send('Item Not Found');
       } else {
         Cart.findOrCreate({
           where: { cart_id: req.currentUser.user_id }
@@ -55,12 +55,12 @@ router.post('/', (req, res) => {
             if (item) {
               item
                 .increment('cart_item_qty')
-                .then(() => res.status(201).json({ msg: 'Item incremented' }));
+                .then(() => res.status(201).json('Item incremented'));
             } else {
               Cart_Item.create({
                 product_fk: req.body.product,
                 cart_fk: req.currentUser.user_id
-              }).then(() => res.status(201).json({ msg: 'Item added' }));
+              }).then(() => res.status(201).json('Item added'));
             }
           });
         });
@@ -79,11 +79,8 @@ router.delete('/:item', (req, res) => {
       Cart_Item.findOne({
         where: { cart_item_id: req.params.item }
       }).then(item => {
-        if (!item) res.status(501).send({ msg: 'Item Not Found' });
-        else
-          item
-            .destroy()
-            .then(() => res.status(204).send({ msg: 'Item deleted' }));
+        if (!item) res.status(501).send('Item Not Found');
+        else item.destroy().then(() => res.status(204).send('Item deleted'));
       });
     })
     .catch(error => res.status(500).send(error));

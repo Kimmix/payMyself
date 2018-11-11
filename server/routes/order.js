@@ -13,7 +13,7 @@ router.get('/checkout', (req, res) => {
   try {
     User.findById(req.currentUser.user_id).then(user => {
       Cart.findById(user.user_id).then(cart => {
-        if (!cart) res.status(501).send({ error: 'Cart Not Found' });
+        if (!cart) res.status(501).send('Cart Not Found');
         else {
           Cart_Item.findAll({
             where: { cart_fk: user.user_id },
@@ -26,7 +26,7 @@ router.get('/checkout', (req, res) => {
             }
             //Payment
             if (total > user.user_money)
-              res.status(502).send({ error: 'Please refill money' });
+              res.status(502).send('Please refill money');
             else {
               Order.create({
                 user_fk: user.user_id,
@@ -43,9 +43,7 @@ router.get('/checkout', (req, res) => {
                     }).then(() => {
                       Cart.destroy({ where: { cart_id: user.user_id } }).then(
                         () => {
-                          res
-                            .status(200)
-                            .send({ msg: 'Thanks for shopping with us' });
+                          res.status(200).send('Thanks for shopping with us');
                         }
                       );
                     });
@@ -62,7 +60,7 @@ router.get('/checkout', (req, res) => {
       });
     });
   } catch (err) {
-    res.status(500).send({ errors: err });
+    res.status(500).send(err);
   }
 });
 

@@ -13,14 +13,14 @@ router.post('/product', (req, res) => {
     product_picture_url: req.body.url,
     product_price: req.body.price
   })
-    .then(product => res.status(201).json({ msg: 'Product created' }))
+    .then(product => res.status(201).json('Product created'))
     .catch(error => res.status(500).send(error));
 });
 
 router.delete('/product/:id', (req, res) => {
   Product.findById(req.params.id)
     .then(product => {
-      if (!product) return res.status(502).send({ msg: 'Product Not Found' });
+      if (!product) return res.status(502).send('Product Not Found');
       return product
         .destroy()
         .then(() => res.status(204).send())
