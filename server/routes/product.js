@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   Product.findAll()
     .then(product => res.status(200).send({ data: product }))
-    .catch(error => res.status(400).send(error));
+    .catch(error => res.status(500).send(error));
 });
 
 router.get('/:product_id', (req, res) => {
@@ -15,10 +15,10 @@ router.get('/:product_id', (req, res) => {
     }
   })
     .then(product => {
-      if (!product) return res.status(400).send({ msg: 'Product Not Found' });
+      if (!product) return res.status(500).send({ error: 'Product Not Found' });
       res.status(200).send(product);
     })
-    .catch(error => res.status(400).send(error));
+    .catch(error => res.status(500).send(error));
 });
 
 module.exports = router;

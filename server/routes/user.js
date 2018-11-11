@@ -7,7 +7,7 @@ router.post('/signup', (req, res) => {
   const { email, password, name, sex, tel } = req.body;
   try {
     User.findOne({ where: { user_email: email } }).then(user => {
-      if (user) res.status(400).json({ errors: 'Your email has already used' });
+      if (user) res.status(500).sent({ error: 'Your email has already used' });
       else {
         User.create({
           user_email: email,
@@ -21,7 +21,7 @@ router.post('/signup', (req, res) => {
       }
     });
   } catch (err) {
-    res.status(400).json({ errors: err });
+    res.status(500).sent({ error: err });
   }
 });
 
@@ -36,9 +36,11 @@ router.get('/', auth, (req, res) => {
       'user_tel',
       'user_money'
     ]
-  }).then(user => {
-    res.status(200).json({ data: user });
-  });
+  })
+    .then(user => {
+      res.status(200).json({ data: user });
+    })
+    .catch(error => res.status(500).send(error));
 });
 
 router.post('/money', auth, (req, res) => {
@@ -46,9 +48,11 @@ router.post('/money', auth, (req, res) => {
   User.increment('user_money', {
     by: money,
     where: { user_id: req.currentUser.user_id }
-  }).then(() => {
-    res.status(200).json({ msg: 'Money refilled' });
-  });
+  })
+    .then(() => {
+      res.status(200).json({ msg: 'Money refilled' });
+    })
+    .catch(error => res.status(500).send(error));
 });
 
 router.post('pin', auth, (req, res) => {
@@ -60,9 +64,11 @@ router.post('pin', auth, (req, res) => {
     {
       where: { user_id: req.currentUser.user_id }
     }
-  ).then(() => {
-    res.status(200).json({ msg: 'Pin seted' });
-  });
+  )
+    .then(() => {
+      res.status(200).json({ msg: 'Pin seted' });
+    })
+    .catch(error => res.status(500).send(error));
 });
 
 module.exports = router;
