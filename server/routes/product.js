@@ -9,8 +9,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:product_id', (req, res) => {
-  console.log('Server quest id =' + req.query.product_id);
-  Product.findById(req.query.product_id)
+  const { product_id } = req.params;
+  console.log('Server request query =' + req.query.product_id);
+  console.log('Server request params =' + req.params.product_id);
+  Product.findById(product_id)
     .then(product => {
       if (!product) return res.status(500).send('Product Not Found');
       else res.status(200).send(product);
