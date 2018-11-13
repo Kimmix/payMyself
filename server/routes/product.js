@@ -8,11 +8,11 @@ router.get('/', (req, res) => {
     .catch(error => res.status(500).send(error));
 });
 
-router.get('/:product_id', (req, res) => {
+router.get('/:product', (req, res) => {
   Product.findById(req.query.product)
     .then(product => {
       if (!product) return res.status(500).send('Product Not Found');
-      res.status(200).send(product);
+      else res.status(200).send(product);
     })
     .catch(error => res.status(500).send(error));
 });
