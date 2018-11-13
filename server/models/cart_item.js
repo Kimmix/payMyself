@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       product_fk: {
         allowNull: false,
         foreignKey: true,
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
       },
       cart_item_qty: {
         type: DataTypes.INTEGER,

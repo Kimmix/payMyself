@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       product_fk: {
         allowNull: false,
         foreignKey: true,
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
       },
       order_item_price: {
         type: DataTypes.FLOAT,
