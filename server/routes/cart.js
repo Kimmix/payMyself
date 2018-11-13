@@ -72,12 +72,13 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:item', (req, res) => {
+  const { item } = req.params;
   Cart.findOne({
     where: { cart_id: req.currentUser.user_id }
   })
     .then(cart => {
       Cart_Item.findOne({
-        where: { cart_item_id: req.query.item }
+        where: { cart_item_id: item }
       }).then(item => {
         if (!item) res.status(501).send('Item Not Found');
         else item.destroy().then(() => res.status(204).send('Item deleted'));
