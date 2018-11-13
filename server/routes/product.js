@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:product_id', (req, res) => {
-  Product.findById(req.params.product)
+  Product.findById(req.query.product)
     .then(product => {
       if (!product) return res.status(500).send('Product Not Found');
       res.status(200).send(product);

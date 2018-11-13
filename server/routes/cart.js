@@ -77,7 +77,7 @@ router.delete('/:item', (req, res) => {
   })
     .then(cart => {
       Cart_Item.findOne({
-        where: { cart_item_id: req.params.item }
+        where: { cart_item_id: req.query.item }
       }).then(item => {
         if (!item) res.status(501).send('Item Not Found');
         else item.destroy().then(() => res.status(204).send('Item deleted'));

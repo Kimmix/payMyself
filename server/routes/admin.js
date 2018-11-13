@@ -18,7 +18,7 @@ router.post('/product', (req, res) => {
 });
 
 router.delete('/product/:id', (req, res) => {
-  Product.findById(req.params.id)
+  Product.findById(req.query.id)
     .then(product => {
       if (!product) return res.status(502).send('Product Not Found');
       return product
