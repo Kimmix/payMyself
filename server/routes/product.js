@@ -9,11 +9,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:product_id', (req, res) => {
-  Product.find({
-    where: {
-      product_id: req.params.product
-    }
-  })
+  Product.findById(req.params.product)
     .then(product => {
       if (!product) return res.status(500).send('Product Not Found');
       res.status(200).send(product);
