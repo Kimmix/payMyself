@@ -8,8 +8,9 @@ router.get('/', (req, res) => {
     .catch(error => res.status(500).send(error));
 });
 
-router.get('/:product', (req, res) => {
-  Product.findById(req.query.product)
+router.get('/:product_id', (req, res) => {
+  console.log('Server quest id =' + req.query.product_id);
+  Product.findById(req.query.product_id)
     .then(product => {
       if (!product) return res.status(500).send('Product Not Found');
       else res.status(200).send(product);
