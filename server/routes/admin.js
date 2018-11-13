@@ -17,15 +17,16 @@ router.post('/product', (req, res) => {
     .catch(error => res.status(500).send(error));
 });
 
-router.delete('/product/:id', (req, res) => {
+router.delete('/product/:product_id', (req, res) => {
   const { product_id } = req.params;
   Product.findById(product_id)
     .then(product => {
       if (!product) return res.status(502).send('Product Not Found');
-      return product
-        .destroy()
-        .then(() => res.status(204).send())
-        .catch(error => res.status(501).send(error));
+      else
+        return product
+          .destroy()
+          .then(() => res.status(204).send())
+          .catch(error => res.status(501).send(error));
     })
     .catch(error => res.status(500).send(error));
 });
