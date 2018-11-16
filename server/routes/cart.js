@@ -52,9 +52,9 @@ router.post('/', (req, res) => {
               product_fk: item,
               cart_fk: cart[0].cart_id
             }
-          }).then(item => {
-            if (item) {
-              item
+          }).then(cart_item => {
+            if (cart_item) {
+              cart_item
                 .increment('cart_item_qty')
                 .then(() =>
                   res.status(201).json(product.product_name + ' incremented')
