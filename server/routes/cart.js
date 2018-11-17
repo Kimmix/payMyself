@@ -23,13 +23,15 @@ router.get('/', (req, res) => {
       ]
     })
       .then(item => {
-        let total = 0;
+        let total = 0,
+          count = 0;
         for (let i = 0; i < item.length; i++) {
           total += item[i].Product.product_price * item[i].cart_item_qty;
+          count += item[i].cart_item_qty;
         }
         res.status(200).json({
           item_in_cart: item,
-          count: item.length,
+          count: count,
           total: total
         });
       })
