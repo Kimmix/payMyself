@@ -78,7 +78,7 @@ router.post('/', (req, res) => {
   }
 });
 
-router.delete('/', (req, res) => {
+router.post('/delete', (req, res) => {
   const { item } = req.body;
   Cart.findOne({
     where: { cart_id: req.currentUser.user_id }
