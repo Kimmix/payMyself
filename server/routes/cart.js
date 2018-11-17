@@ -85,7 +85,13 @@ router.delete('/', (req, res) => {
   })
     .then(cart => {
       Cart_Item.findOne({
-        where: { cart_item_id: item }
+        where: { cart_item_id: item },
+        include: [
+          {
+            model: Product,
+            attributes: ['product_name']
+          }
+        ]
       }).then(item => {
         item
           .destroy()
@@ -95,48 +101,6 @@ router.delete('/', (req, res) => {
       });
     })
     .catch(error => res.status(500).send(error));
-});
-
-router.post('/increment', (req, res) => {
-  const { item } = req.body;
-  try {
-    Cart.findOne({
-      where: { cart_id: req.currentUser.user_id }
-    }).then(cart => {
-      Cart_Item.findOne({
-        where: { cart_item_id: item }
-      }).then(item => {
-        item
-          .increment('cart_item_qty')
-          .then(() => res.status(201).json('Item incremented'));
-      });
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.post('/decrement', (req, res) => {
-  const { item } = req.body;
-  try {
-    Cart.findOne({
-      where: { cart_id: req.currentUser.user_id }
-    }).then(cart => {
-      Cart_Item.findOne({
-        where: { cart_item_id: item }
-      }).then(item => {
-        if (item.cart_item_qty == 1) {
-          item.destroy().then(() => res.status(204).send('Item deleted'));
-        } else {
-          item
-            .decrement('cart_item_qty')
-            .then(() => res.status(201).json('Item decremented'));
-        }
-      });
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
 });
 
 module.exports = router;
