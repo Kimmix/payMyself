@@ -78,7 +78,7 @@ router.post('/', (req, res) => {
   }
 });
 
-router.post('/delete', (req, res) => {
+router.delete('/', (req, res) => {
   const { item } = req.body;
   Cart.findOne({
     where: { cart_id: req.currentUser.user_id }
@@ -87,7 +87,11 @@ router.post('/delete', (req, res) => {
       Cart_Item.findOne({
         where: { cart_item_id: item }
       }).then(item => {
-        item.destroy().then(() => res.status(204).send('Item deleted'));
+        item
+          .destroy()
+          .then(() =>
+            res.status(204).send(item.Product.product_name + ' deleted')
+          );
       });
     })
     .catch(error => res.status(500).send(error));
