@@ -9,33 +9,33 @@ router.use(auth);
 router.get('/', (req, res) => {
   Cart.findById(req.currentUser.user_id).then(cart => {
     if (!cart) {
-      res.status(501).send('Cart empty');
-      return;
-    }
-    Cart_Item.findAll({
-      where: { cart_fk: cart.cart_id },
-      attributes: ['cart_item_id', 'cart_item_qty'],
-      include: [
-        {
-          model: Product,
-          attributes: ['product_name', 'product_price']
-        }
-      ]
-    })
-      .then(item => {
-        let total = 0,
-          count = 0;
-        for (let i = 0; i < item.length; i++) {
-          total += item[i].Product.product_price * item[i].cart_item_qty;
-          count += item[i].cart_item_qty;
-        }
-        res.status(200).json({
-          item_in_cart: item,
-          count: count,
-          total: total
-        });
+      res.status(201).send('Cart empty');
+    } else {
+      Cart_Item.findAll({
+        where: { cart_fk: cart.cart_id },
+        attributes: ['cart_item_id', 'cart_item_qty'],
+        include: [
+          {
+            model: Product,
+            attributes: ['product_name', 'product_price']
+          }
+        ]
       })
-      .catch(error => res.status(500).send(error));
+        .then(item => {
+          let total = 0,
+            count = 0;
+          for (let i = 0; i < item.length; i++) {
+            total += item[i].Product.product_price * item[i].cart_item_qty;
+            count += item[i].cart_item_qty;
+          }
+          res.status(200).json({
+            item_in_cart: item,
+            count: count,
+            total: total
+          });
+        })
+        .catch(error => res.status(500).send(error));
+    }
   });
 });
 
