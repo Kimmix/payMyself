@@ -9,7 +9,7 @@ const router = express.Router();
 const auth = require('../middlewares/authenticate');
 router.use(auth);
 
-router.get('/showorder', (req, res) => {
+router.get('/show', (req, res) => {
   Order.findAll({
     where: { user_fk: req.currentUser.user_id },
     attributes: ['order_id', 'order_total', 'order_id', 'createdAt']
@@ -25,7 +25,7 @@ router.get('/:order', (req, res) => {
   Order.findOne({
     where: { user_fk: req.currentUser.user_id, order_id: order }
   })
-    .then(orders => {
+    .then(() => {
       Order_Item.findAll({
         where: { order_fk: order },
         attributes: ['order_item_id', 'order_item_qty', 'order_item_price'],
@@ -41,7 +41,8 @@ router.get('/:order', (req, res) => {
           }
         ]
       }).then(items => {
-        res.status(200).json(items);
+        if (!items) res.status(404).send('not found');
+        else res.status(200).json({ data: items });
       });
     })
     .catch(error => res.status(500).send(error));
