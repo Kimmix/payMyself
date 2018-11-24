@@ -48,7 +48,7 @@ router.get('/:order', (req, res) => {
     .catch(error => res.status(500).send(error));
 });
 
-router.get('/checkout', (req, res) => {
+router.post('/checkout', (req, res) => {
   try {
     User.findById(req.currentUser.user_id).then(user => {
       Cart.findById(user.user_id).then(cart => {
