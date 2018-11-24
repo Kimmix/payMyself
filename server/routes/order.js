@@ -9,6 +9,44 @@ const router = express.Router();
 const auth = require('../middlewares/authenticate');
 router.use(auth);
 
+router.get('/showorder', (req, res) => {
+  Order.findAll({
+    where: { user_fk: req.currentUser.user_id },
+    attributes: ['order_id', 'order_total', 'order_id', 'createdAt']
+  })
+    .then(order => {
+      res.status(200).json(order);
+    })
+    .catch(error => res.status(500).send(error));
+});
+
+router.get('/:order', (req, res) => {
+  const { order } = req.params;
+  Order.findOne({
+    where: { user_fk: req.currentUser.user_id, order_id: order }
+  })
+    .then(orders => {
+      Order_Item.findAll({
+        where: { order_fk: order },
+        attributes: ['order_item_id', 'order_item_qty', 'order_item_price'],
+        include: [
+          {
+            model: Product,
+            attributes: [
+              'product_name',
+              'product_price',
+              'product_picture_url',
+              'product_description'
+            ]
+          }
+        ]
+      }).then(items => {
+        res.status(200).json(items);
+      });
+    })
+    .catch(error => res.status(500).send(error));
+});
+
 router.get('/checkout', (req, res) => {
   try {
     User.findById(req.currentUser.user_id).then(user => {
