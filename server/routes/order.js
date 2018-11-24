@@ -9,7 +9,7 @@ const router = express.Router();
 const auth = require('../middlewares/authenticate');
 router.use(auth);
 
-router.get('/show', (req, res) => {
+router.get('/', (req, res) => {
   Order.findAll({
     where: { user_fk: req.currentUser.user_id },
     attributes: ['order_id', 'order_total', 'order_id', 'createdAt']
