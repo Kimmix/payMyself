@@ -25,7 +25,7 @@ router.get('/:order', (req, res) => {
   Order.findOne({
     where: { user_fk: req.currentUser.user_id, order_id: order }
   })
-    .then(() => {
+    .then(orders => {
       Order_Item.findAll({
         where: { order_fk: order },
         attributes: ['order_item_id', 'order_item_qty', 'order_item_price'],
@@ -41,7 +41,7 @@ router.get('/:order', (req, res) => {
           }
         ]
       }).then(items => {
-        if (!items) res.status(404).send('not found');
+        if (!orders) res.status(404).send('not found');
         else res.status(200).json({ data: items });
       });
     })
