@@ -42,7 +42,7 @@ router.get('/:order', (req, res) => {
           }
         ]
       }).then(items => {
-        res.status(200).json({ data: items });
+        res.status(200).json(items);
       });
     })
     .catch(error => res.status(500).send(error));
