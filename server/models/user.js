@@ -32,13 +32,6 @@ module.exports = (sequelize, DataTypes) => {
     user_name: { type: DataTypes.STRING },
     user_sex: { type: DataTypes.ENUM, values: ['male', 'female'] },
     user_tel: { type: DataTypes.STRING },
-    user_pin: {
-      type: DataTypes.INTEGER(4),
-      validate: {
-        isInt: true,
-        min: 4
-      }
-    },
     user_money: { type: DataTypes.FLOAT, defaultValue: 10000 }
   });
 
@@ -47,6 +40,9 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'cart_id'
     });
     User.hasMany(models.Order, {
+      foreignKey: 'user_fk'
+    });
+    User.hasMany(models.Payment, {
       foreignKey: 'user_fk'
     });
   };

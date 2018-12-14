@@ -11,7 +11,8 @@ router.post('/product', (req, res) => {
     product_name: req.body.name,
     product_description: req.body.description,
     product_picture_url: req.body.url,
-    product_price: req.body.price
+    product_price: req.body.price,
+    product_stock: req.body.stock
   })
     .then(product => res.status(201).json(product.product_name + ' created'))
     .catch(error => res.status(500).send(error));
@@ -22,7 +23,8 @@ router.put('/product', (req, res) => {
     product_name: req.body.name,
     product_description: req.body.description,
     product_picture_url: req.body.url,
-    product_price: req.body.price
+    product_price: req.body.price,
+    product_stock: req.body.stock
   })
     .then(product => res.status(203).json(product.product_name + +' updated'))
     .catch(error => res.status(500).send(error));

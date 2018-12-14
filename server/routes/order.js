@@ -5,6 +5,7 @@ const Cart_Item = require('../models').Cart_Item;
 const Product = require('../models').Product;
 const Order = require('../models').Order;
 const Order_Item = require('../models').Order_Item;
+const Payment = require('../models').Payment;
 const router = express.Router();
 const auth = require('../middlewares/authenticate');
 router.use(auth);
@@ -26,24 +27,26 @@ router.get('/:order', (req, res) => {
     where: { user_fk: req.currentUser.user_id, order_id: order }
   })
     .then(orders => {
-      if (!orders) res.status(404).send('not found');
-      Order_Item.findAll({
-        where: { order_fk: order },
-        attributes: ['order_item_id', 'order_item_qty', 'order_item_price'],
-        include: [
-          {
-            model: Product,
-            attributes: [
-              'product_name',
-              'product_price',
-              'product_picture_url',
-              'product_description'
-            ]
-          }
-        ]
-      }).then(items => {
-        res.status(200).json(items);
-      });
+      if (!orders) res.status(404).send('Order not exist');
+      else {
+        Order_Item.findAll({
+          where: { order_fk: order },
+          attributes: ['order_item_id', 'order_item_qty', 'order_item_price'],
+          include: [
+            {
+              model: Product,
+              attributes: [
+                'product_name',
+                'product_price',
+                'product_picture_url',
+                'product_description'
+              ]
+            }
+          ]
+        }).then(items => {
+          res.status(200).json(items);
+        });
+      }
     })
     .catch(error => res.status(500).send(error));
 });
@@ -58,41 +61,66 @@ router.post('/checkout', (req, res) => {
             where: { cart_fk: user.user_id },
             include: [Product]
           }).then(item => {
-            //Find Total
-            let total = 0;
+            //Find Pre-total
+            let pre_total = 0;
             for (let i = 0; i < item.length; i++) {
-              total += item[i].Product.product_price * item[i].cart_item_qty;
+              pre_total +=
+                item[i].Product.product_price * item[i].cart_item_qty;
             }
-            //Payment
-            if (total > user.user_money)
+            //Check money
+            if (pre_total > user.user_money)
               res.status(502).send('Please refill money');
             else {
-              Order.create({
-                user_fk: user.user_id,
-                order_total: total
-              }).then(order => {
-                if (item.length > 0) {
-                  for (var i = 0; i < item.length; i++) {
-                    Order_Item.create({
-                      order_item_id: order.order_id * 100 + (i + 1),
-                      order_fk: order.order_id,
-                      product_fk: item[i].product_fk,
-                      order_item_price: item[i].Product.product_price,
-                      order_item_qty: item[i].cart_item_qty
-                    }).then(() => {
-                      Cart.destroy({ where: { cart_id: user.user_id } }).then(
-                        () => {
-                          res.status(200).send('Thanks for shopping with us');
-                        }
-                      );
-                    });
+              var payment = 0;
+              //Make new order
+              Order.create({ user_fk: user.user_id })
+                .then(order => {
+                  if (item.length > 0) {
+                    let item_qty = 0;
+                    for (var i = 0; i < item.length; i++) {
+                      //Check stock
+                      if (item[i].cart_item_qty > item[i].Product.product_stock)
+                        item_qty = item[i].Product.product_stock;
+                      else item_qty = item[i].cart_item_qty;
+                      Product.decrement('product_stock', {
+                        by: item_qty,
+                        where: { product_id: item[i].product_fk }
+                      });
+                      //Create order list
+                      Order_Item.create({
+                        order_item_id: order.order_id * 100 + (i + 1),
+                        order_fk: order.order_id,
+                        product_fk: item[i].product_fk,
+                        order_item_price: item[i].Product.product_price,
+                        order_item_qty: item_qty
+                      });
+                      //Find true total sum
+                      payment += item[i].Product.product_price * item_qty;
+                    }
                   }
-                }
-                User.decrement('user_money', {
-                  by: total,
-                  where: { user_id: user.user_id }
+                  order.update({
+                    order_total: payment
+                  });
+                })
+                .then(() => {
+                  //Cleanup
+                  Cart.destroy({ where: { cart_id: user.user_id } }).then(
+                    () => {
+                      User.decrement('user_money', {
+                        by: payment,
+                        where: { user_id: user.user_id }
+                      }).then(() =>
+                        Payment.create({
+                          payment_amount: payment,
+                          payment_type: 'pay',
+                          user_fk: user.user_id
+                        }).then(() =>
+                          res.status(200).send('Thanks for shopping with us')
+                        )
+                      );
+                    }
+                  );
                 });
-              });
             }
           });
         }

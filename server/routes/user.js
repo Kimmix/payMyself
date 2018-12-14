@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models').User;
+const Payment = require('../models').Payment;
 const auth = require('../middlewares/authenticate');
 const router = express.Router();
 
@@ -49,11 +50,17 @@ router.post('/money', auth, (req, res) => {
   User.increment('user_money', {
     by: money,
     where: { user_id: req.currentUser.user_id }
-  })
-    .then(() => {
-      res.status(200).json('Money refilled');
+  }).then(user => {
+    Payment.create({
+      payment_amount: money,
+      payment_type: 'refill',
+      user_fk: req.currentUser.user_id
     })
-    .catch(error => res.status(500).send(error));
+      .then(() => {
+        res.status(200).json('Money refilled');
+      })
+      .catch(error => res.status(500).send(error));
+  });
 });
 
 router.post('pin', auth, (req, res) => {

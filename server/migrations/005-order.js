@@ -1,21 +1,21 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Orders", {
+    queryInterface.createTable('Orders', {
       order_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
-        autoIncrement: true,
+        autoIncrement: true
       },
       user_fk: {
         type: Sequelize.UUID,
         foreignKey: true,
         allowNull: false,
-        onDelete: "CASCADE",
+        onDelete: 'CASCADE',
         references: {
-          model: "Users",
-          key: "user_id",
-          as: "user_fk"
+          model: 'Users',
+          key: 'user_id',
+          as: 'user_fk'
         }
       },
       order_total: {
@@ -30,5 +30,5 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-  down: (queryInterface /* , Sequelize */) => queryInterface.dropTable("Orders")
+  down: (queryInterface /* , Sequelize */) => queryInterface.dropTable('Orders')
 };

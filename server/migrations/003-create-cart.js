@@ -1,15 +1,15 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Carts", {
+    queryInterface.createTable('Carts', {
       cart_id: {
         type: Sequelize.UUID,
         primaryKey: true,
         allowNull: false,
-        onDelete: "CASCADE",
+        onDelete: 'CASCADE',
         references: {
-          model: "Users",
-          key: "user_id",
-          as: "cart_id"
+          model: 'Users',
+          key: 'user_id',
+          as: 'cart_id'
         }
       },
       createdAt: {
@@ -21,5 +21,5 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-  down: (queryInterface /* , Sequelize */) => queryInterface.dropTable("Carts")
+  down: (queryInterface /* , Sequelize */) => queryInterface.dropTable('Carts')
 };

@@ -48,9 +48,9 @@ router.post('/', (req, res) => {
   const { item } = req.body;
   try {
     Product.findById(item).then(product => {
-      if (!product) {
-        res.status(501).send('Item Not Found');
-      } else {
+      if (!product) res.status(501).send('Product not found');
+      else if (product.product_stock <= 0) res.status(501).send('Out of stock');
+      else {
         Cart.findOrCreate({
           where: { cart_id: req.currentUser.user_id }
         }).then(cart => {

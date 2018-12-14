@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       product_name: DataTypes.STRING,
       product_description: DataTypes.STRING,
       product_picture_url: DataTypes.STRING,
-      product_price: DataTypes.FLOAT
+      product_price: DataTypes.FLOAT,
+      product_stock: DataTypes.INTEGER
     },
     {}
   );
