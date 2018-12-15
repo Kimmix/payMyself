@@ -88,7 +88,7 @@ router.post('/increment', (req, res) => {
   Cart.findOne({
     where: { cart_id: req.currentUser.user_id }
   }).then(() => {
-    Cart_item.increment('cart_item_qty', {
+    Cart_Item.increment('cart_item_qty', {
       where: { cart_item_id: item }
     }).then(() => res.status(201).json('incremented'));
   });
@@ -99,7 +99,7 @@ router.post('/decrement', (req, res) => {
   Cart.findOne({
     where: { cart_id: req.currentUser.user_id }
   }).then(() => {
-    Cart_item.decrement('cart_item_qty', {
+    Cart_Item.decrement('cart_item_qty', {
       where: { cart_item_id: item }
     }).then(() => res.status(201).json('decremented'));
   });
