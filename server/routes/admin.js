@@ -19,14 +19,21 @@ router.post('/product', (req, res) => {
 });
 
 router.put('/product', (req, res) => {
-  Product.update({
-    product_name: req.body.name,
-    product_description: req.body.description,
-    product_picture_url: req.body.url,
-    product_price: req.body.price,
-    product_stock: req.body.stock
-  })
-    .then(product => res.status(203).json(product.product_name + +' updated'))
+  const { id, name, description, url, price, stock } = req.body;
+  Product.findById(id)
+    .then(product => {
+      product
+        .update({
+          product_name: name,
+          product_description: description,
+          product_picture_url: url,
+          product_price: price,
+          product_stock: stock
+        })
+        .then(product =>
+          res.status(203).json(product.product_name + +' updated')
+        );
+    })
     .catch(error => res.status(500).send(error));
 });
 
