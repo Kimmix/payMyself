@@ -31,7 +31,7 @@ router.put('/product', (req, res) => {
           product_stock: stock
         })
         .then(product =>
-          res.status(203).json(product.product_name + +' updated')
+          res.status(203).json(product.product_name + ' updated')
         );
     })
     .catch(error => res.status(500).send(error));
