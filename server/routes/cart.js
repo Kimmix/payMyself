@@ -101,9 +101,9 @@ router.post('/decrement', (req, res) => {
   }).then(() => {
     Cart_Item.findOne({ where: { cart_item_id: item } }).then(cartItem => {
       if (cartItem.cart_item_qty > 1) {
-        Cart_Item.decrement('cart_item_qty').then(() =>
-          res.status(201).json('decremented')
-        );
+        cartItem
+          .decrement('cart_item_qty')
+          .then(() => res.status(201).json('decremented'));
       } else res.status(203).json('react minimum');
     });
   });
