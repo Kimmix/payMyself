@@ -115,7 +115,10 @@ router.post('/checkout', (req, res) => {
                           payment_type: 'pay',
                           user_fk: user.user_id
                         }).then(() =>
-                          res.status(200).send('Thanks for shopping with us')
+                          res.status(200).send({
+                            msg: 'Thanks for shopping with us',
+                            total: payment
+                          })
                         )
                       );
                     }
