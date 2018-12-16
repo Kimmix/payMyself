@@ -19,11 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       values: ['refill', 'pay']
     }
   });
-  // Payment.associate = function(models) {
-  //   Payment.belongsToMany(models.User, {
-  //     foreignKey: 'user_fk',
-  //     onDelete: 'CASCADE'
-  //   });
-  // };
+
   return Payment;
 };

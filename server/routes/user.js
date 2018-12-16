@@ -63,20 +63,4 @@ router.post('/money', auth, (req, res) => {
   });
 });
 
-router.post('pin', auth, (req, res) => {
-  const { pin } = req.body;
-  User.update(
-    {
-      user_pin: pin
-    },
-    {
-      where: { user_id: req.currentUser.user_id }
-    }
-  )
-    .then(() => {
-      res.status(200).json('Pin seted');
-    })
-    .catch(error => res.status(500).send(error));
-});
-
 module.exports = router;
