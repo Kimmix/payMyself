@@ -7,7 +7,7 @@ router.use(auth);
 router.get('/', (req, res) => {
   Payment.findAll({
     where: { user_fk: req.currentUser.user_id },
-    order: ['createdAt'],
+    order: ['createdAt DESC'],
     limit: 10
   })
     .then(payment => res.status(200).json(payment))
