@@ -13,6 +13,7 @@ router.use(auth);
 router.get('/', (req, res) => {
   Order.findAll({
     where: { user_fk: req.currentUser.user_id },
+    order: [['createdAt', 'DESC']],
     attributes: ['order_id', 'order_total', 'order_id', 'createdAt']
   })
     .then(order => {

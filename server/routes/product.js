@@ -3,7 +3,7 @@ const Product = require('../models').Product;
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  Product.findAll()
+  Product.findAll({ order: [['product_name']] })
     .then(product => res.status(200).send(product))
     .catch(error => res.status(500).send(error));
 });

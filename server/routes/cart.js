@@ -88,9 +88,23 @@ router.post('/increment', (req, res) => {
   Cart.findOne({
     where: { cart_id: req.currentUser.user_id }
   }).then(() => {
-    Cart_Item.increment('cart_item_qty', {
-      where: { cart_item_id: item }
-    }).then(() => res.status(201).json('incremented'));
+    Cart_Item.findOne({
+      where: { cart_item_id: item },
+      include: [
+        {
+          model: Product,
+          attributes: ['product_stock']
+        }
+      ]
+    }).then(cartItem => {
+      if (cart_item_qty >= cartItem.Product.product_stock)
+        res.status(201).json('No more in stock');
+      else {
+        Cart_Item.increment('cart_item_qty', {
+          where: { cart_item_id: item }
+        }).then(() => res.status(201).json('incremented'));
+      }
+    });
   });
 });
 
