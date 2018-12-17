@@ -97,12 +97,12 @@ router.post('/increment', (req, res) => {
         }
       ]
     }).then(cartItem => {
-      if (cart_item_qty >= cartItem.Product.product_stock)
+      if (cartItem.cart_item_qty >= cartItem.Product.product_stock)
         res.status(201).json('No more in stock');
       else {
-        Cart_Item.increment('cart_item_qty', {
-          where: { cart_item_id: item }
-        }).then(() => res.status(201).json('incremented'));
+        cartItem
+          .increment('cart_item_qty')
+          .then(() => res.status(201).json('incremented'));
       }
     });
   });
