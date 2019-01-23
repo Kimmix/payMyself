@@ -64,11 +64,7 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   User.prototype.toAuthJSON = function toAuthJSON() {
-    return {
-      user_email: this.email,
-      user_isAdmin: this.user_isAdmin,
-      token: this.generateJWT()
-    };
+    return this.generateJWT()
   };
 
   return User;

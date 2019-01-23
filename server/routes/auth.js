@@ -9,7 +9,17 @@ router.post('/', (req, res) => {
   User.findOne({ where: { user_email: email } }).then(user => {
     if (user) {
       bcrypt.compare(password, user.user_password, (err, result) => {
-        if (result) res.json({ user: user.toAuthJSON() });
+        const token = user.toAuthJSON();
+        if (result)
+          res
+            .header('Authorization', 'Bearer ${token}')
+            .json({
+              user: {
+                user_email: this.email,
+                user_isAdmin: this.user_isAdmin,
+                token: token
+              }
+            });
         else res.status(501).send('Invalid password');
       });
     } else res.status(500).send('User not found');
