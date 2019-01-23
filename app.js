@@ -7,7 +7,7 @@ const cors = require('cors');
 
 dotenv.config();
 app.use(logger('dev'));
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header(
     'Access-Control-Allow-Headers',
     'Origin , X-Requested-With , Content-Type , Accept , Authorization'
@@ -26,6 +26,7 @@ app.use('/api/v1/payment', require('./server/routes/payment'));
 app.use('/api/v1/product', require('./server/routes/product'));
 app.use('/api/v1/cart', require('./server/routes/cart'));
 app.use('/api/v1/order', require('./server/routes/order'));
+app.use("/api/v1/article", require("./server/routes/article"))
 app.get('/', (req, res) =>
   res.status(200).send({
     message:
