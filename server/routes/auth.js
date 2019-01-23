@@ -12,7 +12,7 @@ router.post('/', (req, res) => {
         const token = user.toAuthJSON();
         if (result)
           res
-            .header('Authorization', 'Bearer ${token}')
+            .header('Authorization', 'Bearer ' + token)
             .json({
               user: {
                 user_email: this.email,
