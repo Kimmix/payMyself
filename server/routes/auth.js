@@ -15,8 +15,6 @@ router.post('/', (req, res) => {
             .header('Authorization', 'Bearer ' + token)
             .json({
               user: {
-                user_email: this.email,
-                user_isAdmin: this.user_isAdmin,
                 token: token
               }
             });

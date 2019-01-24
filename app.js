@@ -7,13 +7,6 @@ const cors = require('cors');
 
 dotenv.config();
 app.use(logger('dev'));
-app.use(function (req, res, next) {
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin , X-Requested-With , Content-Type , Accept , Authorization'
-  ); // Allow Any Header
-  next();
-});
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
