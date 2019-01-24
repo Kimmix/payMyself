@@ -9,10 +9,10 @@ dotenv.config();
 app.use(logger('dev'));
 app.use(function (req, res, next) {
   res.header(
-    'Access-Control-Allow-Headers',
-    'Origin , X-Requested-With , Content-Type , Accept , Authorization',
+    // 'Access-Control-Allow-Headers',
+    // 'Origin , X-Requested-With , Content-Type , Accept , Authorization',
     'Access-Control-Expose-Headers',
-    +'Authorization'
+    'Authorization'
   ); // Allow Any Header
   next();
 });
