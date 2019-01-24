@@ -15,7 +15,8 @@ router.post('/', (req, res) => {
             .header('Authorization', 'Bearer ' + token)
             .json({
               user: {
-                token: token
+                token: token,
+                name: user.user_name
               }
             });
         else res.status(501).send('Invalid password');
