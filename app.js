@@ -14,7 +14,7 @@ app.use(function (req, res, next) {
   ); // Allow Any Header
   next();
 });
-// app.use(cors());
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
