@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Payment = sequelize.define("Article", {
+  const Article = sequelize.define("Article", {
     article_id: {
       allowNull: false,
       primaryKey: true,
