@@ -28,5 +28,5 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  return Payment
+  return Article
 }
