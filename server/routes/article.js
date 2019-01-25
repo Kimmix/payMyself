@@ -52,4 +52,14 @@ router.put('/:id', auth, (req, res) => {
     .catch(error => res.status(500).send(error));
 });
 
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  Article.findById(id)
+    .then(article => {
+      if (!article) return res.status(502).send('Article Not Found');
+      else return article.destroy().then(() => res.status(204).send(article.title + 'deleted'));
+    })
+    .catch(error => res.status(500).send(error));
+});
+
 module.exports = router;
