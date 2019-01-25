@@ -45,6 +45,9 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Payment, {
       foreignKey: 'user_fk'
     });
+    User.hasMany(models.Article, {
+      foreignKey: 'user_fk'
+    });
   };
 
   User.beforeCreate((user, options) => {

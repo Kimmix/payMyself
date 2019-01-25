@@ -20,7 +20,13 @@ module.exports = (sequelize, DataTypes) => {
     content: {
       type: DataTypes.STRING
     }
-  })
+  });
+  Article.associate = function (models) {
+    Article.belongsTo(models.User, {
+      foreignKey: 'user_fk',
+      onDelete: 'CASCADE'
+    });
+  };
 
   return Payment
 }
