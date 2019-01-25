@@ -23,7 +23,9 @@ router.post('/', auth, (req, res) => {
   const { title, excerpt, content } = req.body;
   Article.create({
     user_fk: req.currentUser.user_id,
-    title, excerpt, content
+    title: title,
+    excerpt: excerpt,
+    content: content
   })
     .then(article => res.status(201).json(article.title + ' created'))
     .catch(error => res.status(500).send(error));
@@ -36,7 +38,11 @@ router.put('/:id', auth, (req, res) => {
     .then(article => {
       if (article.user_fk === req.currentUser.user_id) {
         article
-          .update({ title, excerpt, content })
+          .update({
+            title: title,
+            excerpt: excerpt,
+            content: content
+          })
           .then(article =>
             res.status(203).json(article.title + ' updated')
           );
