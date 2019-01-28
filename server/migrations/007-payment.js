@@ -35,5 +35,5 @@ module.exports = {
       }
     }),
   down: (queryInterface /* , Sequelize */) =>
-    queryInterface.dropTable('Payment_Histories')
+    queryInterface.dropTable('Payments')
 };
